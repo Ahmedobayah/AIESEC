@@ -26,6 +26,11 @@ doc/
 *.swp
 *~
 .project
+log/*
+tmp/*
+db/neo4j*
+db/neo4j/*
+.shell_history
 .idea
 .secret
 .DS_Store
@@ -33,3 +38,7 @@ doc/
 /public
 /log
 .vagrant
+.ruby-version
+coverage/*
+_builds/
+_steps/
