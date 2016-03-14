@@ -26,7 +26,11 @@ class AuthController < ApplicationController
     uri = URI.parse("https://gis-api.aiesec.org/v2/people.json")
     params['access_token'] = @expa_token
     new_params = params.slice!(:auth, :controller, :action)
-    response = Net::HTTP.post_form(uri, new_params)
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true
+    http.verify_mode = OpenSSL::SSL::VERIFY_PEER
+    req = Net::HTTP::Post.new(uri.path, new_params)
+    response = http.request(req)
     response.body
   end
 end
