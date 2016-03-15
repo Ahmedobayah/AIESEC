@@ -27,8 +27,9 @@ class AuthController < ApplicationController
     params['access_token'] = @expa_token
     new_params = params.slice!(:auth, :controller, :action)
     http = Net::HTTP.new(uri.host, uri.port)
-    http.use_ssl = true
-    http.verify_mode = OpenSSL::SSL::VERIFY_PEER
+    http.use_ssl = false
+    # http.ca_path = Rails.root.join('lib/certs')
+    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
     req = Net::HTTP::Post.new(uri.path, new_params)
     response = http.request(req)
     response.body
