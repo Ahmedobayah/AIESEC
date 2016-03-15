@@ -3,7 +3,7 @@ class AuthController < ApplicationController
   
   def auth_expa
     url = 'https://auth.aiesec.org/users/sign_in'
-    agent = Mechanize.new
+    agent = Mechanize.new{|a| a.ssl_version, a.verify_mode = 'TLSv1', OpenSSL::SSL::VERIFY_NONE}
     page = agent.get(url)
     aiesec_form = page.form() 
     aiesec_form.field_with(:name => 'user[email]').value = "laila.khaled01@gmail.com" 
@@ -26,12 +26,7 @@ class AuthController < ApplicationController
     uri = URI.parse("https://gis-api.aiesec.org/v2/people.json")
     params['access_token'] = @expa_token
     new_params = params.slice!(:auth, :controller, :action)
-    http = Net::HTTP.new(uri.host, uri.port)
-    http.use_ssl = false
-    # http.ca_path = Rails.root.join('lib/certs')
-    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-    req = Net::HTTP::Post.new(uri.path, new_params)
-    response = http.request(req)
+    response = Net::HTTP.post_form(uri, new_params)
     response.body
   end
 end

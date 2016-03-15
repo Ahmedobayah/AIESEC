@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.3.0'
+ruby '2.1.5'
 gem 'activerecord-session_store'
 gem 'annotate', '~> 2.6.6'
 gem 'apipie-rails', github: 'owahab/apipie-rails'
